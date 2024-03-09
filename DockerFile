@@ -1,0 +1,42 @@
+FROM kasmweb/core-ubuntu-jammy:1.14.0
+USER root
+
+ENV HOME /home/kasm-default-profile
+ENV STARTUPDIR /dockerstartup
+ENV INST_SCRIPTS $STARTUPDIR/install
+WORKDIR $HOME
+
+######### Customize Container Here ###########
+RUN echo 'kasm-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+RUN mv /etc/apt/sources.list /etc/apt/sources_backup.list && \
+echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse" >> /etc/apt/sources.list && \
+echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+echo "deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN apt update
+
+#COPY ./install_edge.sh $INST_SCRIPTS/edge/
+#COPY ./edge.deb $INST_SCRIPTS/edge/
+#RUN wget -O $INST_SCRIPTS/edge/edge.deb 'https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_120.0.2210.91-1_amd64.deb?brand=M102'
+#RUN bash $INST_SCRIPTS/edge/install_edge.sh  && rm -rf $INST_SCRIPTS/edge/
+
+COPY ./install_workbench.sh $INST_SCRIPTS/workbench/
+COPY ./mysql-workbench.deb $INST_SCRIPTS/workbench/
+RUN bash $INST_SCRIPTS/workbench/install_workbench.sh  && rm -rf $INST_SCRIPTS/workbench/
+
+COPY ./install_tinyrdm.sh $INST_SCRIPTS/tiny-rdm/
+COPY ./tiny-rdm_1.1.9_linux_amd64.deb $INST_SCRIPTS/tiny-rdm/
+RUN bash $INST_SCRIPTS/tiny-rdm/install_tinyrdm.sh && rm -rf $INST_SCRIPTS/tiny-rdm/
+######### End Customizations ###########
+
+RUN chown 1000:0 $HOME
+RUN $STARTUPDIR/set_user_permission.sh $HOME
+
+ENV HOME /home/kasm-user
+WORKDIR $HOME
+RUN mkdir -p $HOME && chown -R 1000:0 $HOME
+COPY ./init.sh $STARTUPDIR/init.sh
+USER 1000
+ENTRYPOINT ["/dockerstartup/init.sh", "/dockerstartup/kasm_default_profile.sh", "/dockerstartup/vnc_startup.sh", "/dockerstartup/kasm_startup.sh"]
+CMD ["--wait"]
+#CMD ["--tail-log"]
