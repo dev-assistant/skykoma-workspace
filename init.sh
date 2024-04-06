@@ -2,17 +2,20 @@
 ENV_MYSQLWB_CONFIG_DIR=${MYSQLWB_CONFIG_DIR:-"/data/.config/mysqlwb/config"}
 ENV_MYSQLWB_KEYRINGS_DIR=${MYSQLWB_KEYRINGS_DIR:-"/data/.config/mysqlwb/keyrings"}
 ENV_TINYRDM_CONFIG_DIR=${TINY_RDM_CONFIG_DIR:-"/data/.config/TinyRDM"}
+ENV_MONGOCOMPASS_CONFIG_DIR=${MONGO_COMPASS_CONFIG_DIR:-"/data/.config/mongocompass"}
+ENV_STUDIO_3T_CONFIG_DIR=${STUDIO_3T_CONFIG_DIR:-"/data/.config/.3T"}
+ENV_PGADMIN_CONFIG_DIR=${PGADMIN_CONFIG_DIR:-"/data/.config/.pgadmin"}
 #sed -i "s#Exec=mysql-workbench#Exec=mysql-workbench --configdir ${ENV_MYSQLWB_CONFIG_DIR}#g" /home/kasm-default-profile/Desktop/mysql-workbench.desktop
 enable_x=0
 perform_rsync() {
     SRC=$1
     DST=$2
-    if [ -d $SRC ]; then
-        mkdir -p $DST
-        rsync -vzrtopg --progress --delete $SRC $DST
+    if [ -d "$SRC" ]; then
+        mkdir -p "$DST"
+        rsync -vzrtopg --progress --delete "$SRC" "$DST"
     else
-        mkdir -p $SRC
-        rsync -vzrtopg --progress --delete $DST $SRC
+        mkdir -p "$SRC"
+        rsync -vzrtopg --progress --delete "$DST" "$SRC"
     fi
 }
 
@@ -27,6 +30,9 @@ sync_mysqlwb_configs(){
         perform_rsync ~/.mysql/workbench/ $ENV_MYSQLWB_CONFIG_DIR/
         perform_rsync ~/.local/share/keyrings/ $ENV_MYSQLWB_KEYRINGS_DIR/
         perform_rsync ~/.config/TinyRDM/ $ENV_TINYRDM_CONFIG_DIR/
+        perform_rsync ~/.config/MongoDB\ Compass/ $ENV_MONGOCOMPASS_CONFIG_DIR/
+        perform_rsync ~/.3T/ $ENV_STUDIO_3T_CONFIG_DIR/
+        perform_rsync ~/.pgadmin/ $ENV_PGADMIN_CONFIG_DIR/
         sleep 60
         # 每 60s 执行一次 rsync
     done
@@ -38,3 +44,4 @@ sync_mysqlwb_configs(){
 }
 sync_mysqlwb_configs &
 exec "$@"
+

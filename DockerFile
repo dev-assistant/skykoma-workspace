@@ -27,6 +27,18 @@ RUN bash $INST_SCRIPTS/workbench/install_workbench.sh  && rm -rf $INST_SCRIPTS/w
 COPY ./install_tinyrdm.sh $INST_SCRIPTS/tiny-rdm/
 COPY ./tiny-rdm_1.1.9_linux_amd64.deb $INST_SCRIPTS/tiny-rdm/
 RUN bash $INST_SCRIPTS/tiny-rdm/install_tinyrdm.sh && rm -rf $INST_SCRIPTS/tiny-rdm/
+
+COPY ./install_mongocompass.sh $INST_SCRIPTS/mongodb/
+COPY ./mongodb-mongosh_2.2.0_amd64.deb ./mongodb-compass_1.42.2_amd64.deb $INST_SCRIPTS/mongodb/
+RUN bash $INST_SCRIPTS/mongodb/install_mongocompass.sh && rm -rf $INST_SCRIPTS/mongodb/
+
+COPY ./install_studio3t.sh $INST_SCRIPTS/studio3t/
+COPY ./studio-3t-linux-x64.tar.gz $INST_SCRIPTS/studio3t/
+RUN bash $INST_SCRIPTS/studio3t/install_studio3t.sh && rm -rf $INST_SCRIPTS/studio3t/
+
+
+COPY ./install_pgadmin.sh $INST_SCRIPTS/pgadmin/
+RUN bash $INST_SCRIPTS/pgadmin/install_pgadmin.sh && rm -rf $INST_SCRIPTS/pgadmin/
 ######### End Customizations ###########
 
 RUN chown 1000:0 $HOME
