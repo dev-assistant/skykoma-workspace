@@ -21,6 +21,7 @@ RUN mkdir /download && cd /download && \
     rm /download/projector-server.zip && \
     find . -maxdepth 1 -type d -name projector-server-* -exec mv {} projector-server \;
 # workspace
+# FROM kasmweb/core-ubuntu-noble:1.16.0 as workspace
 FROM kasmweb/core-ubuntu-jammy:1.16.0 as workspace
 ENV PROJECTOR_USER_NAME kasm-user
 ENV HOME /home/kasm-default-profile

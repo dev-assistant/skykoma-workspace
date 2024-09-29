@@ -1,3 +1,4 @@
+# FROM kasmweb/core-ubuntu-noble:1.16.0 as workspace
 FROM kasmweb/core-ubuntu-jammy:1.16.0 as workspace
 ENV PROJECTOR_USER_NAME kasm-user
 ENV HOME /home/kasm-default-profile
