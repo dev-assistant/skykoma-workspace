@@ -19,15 +19,16 @@ docker run -d --name skykoma-workspace --hostname=ubuntu --shm-size=512m \
     -p 6901:6901 \
     -p 2222:22 \
     -p 8887:8887 \
-    -p 2333:2333 \
+    -v /data:/data
     $IMAGE
 ```
-1. vnc server avaliable pm https://localhost:6901 with basic auth
+2. vnc server avaliable pm https://localhost:6901 with basic auth
 * User : kasm_user
 * Password: see env $VNC_PW
 
-1. projector server avaliable on http://localhost:8887 when switch to projector mode
+3. projector server avaliable on http://localhost:8887 when switch to projector mode
 * add query params token when env PROJECTOR_SERVER_TOKEN has been set, such as http://localhost:8887?token=123456
+4. TODO add more env explain, refer from [here](https://blog.hylstudio.cn/archives/986#:~:text=TLSv1.3-,%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F,-%E5%B8%B8%E7%94%A8%E7%9A%84%E7%8E%AF%E5%A2%83). 
 ## Dev info
 see `build.sh` and `DockefFile` for all details
 1. `kasm_entrypoint.sh` 
