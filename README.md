@@ -10,7 +10,9 @@ builds a docker image to run idea in a container, which is based on [kasmtech/wo
 1. Run the container as a daemon.
 `--shm-size` default is 64MB not engough xfdesktop used, can be listed by `ipcs -m --human`
 ```bash
-docker run --name skykoma-workspace --hostname=ubuntu --shm-size=512m \
+IMAGE=registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace:2024092901-skykoma-workspace
+# IMAGE=registry.hylstudio.local/skykoma-workspace:2024092801
+docker run -d --name skykoma-workspace --hostname=ubuntu --shm-size=512m \
     -e LOCAL_USER_UID=0 -e PERSISTENT_HOME=1 -e PERSISTENT_HOME_DIR=/data/root \
     -e VNC_PW=password \
     -e PROJECTOR_SERVER_TOKEN=123456 \
@@ -18,14 +20,14 @@ docker run --name skykoma-workspace --hostname=ubuntu --shm-size=512m \
     -p 2222:22 \
     -p 8887:8887 \
     -p 2333:2333 \
-    registry.hylstudio.local/skykoma-workspace:2024092801
+    $IMAGE
 ```
-
-1. Configure corplink via a browser: https://localhost:6901.
-
+1. vnc server avaliable pm https://localhost:6901 with basic auth
 * User : kasm_user
-* Password: $VNC_PW
+* Password: see env $VNC_PW
 
+1. projector server avaliable on http://localhost:8887 when switch to projector mode
+* add query params token when env PROJECTOR_SERVER_TOKEN has been set, such as http://localhost:8887?token=123456
 ## Dev info
 see `build.sh` and `DockefFile` for all details
 1. `kasm_entrypoint.sh` 
