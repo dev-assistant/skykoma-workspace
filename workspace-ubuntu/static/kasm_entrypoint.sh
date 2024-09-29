@@ -28,6 +28,11 @@ persist_home_dir() {
     echo "clean idea lock files"
 }
 
+if [ $USER_UID == '0' ]; then
+    export HOME=/root
+else
+    export HOME=/home/$USERNAME
+fi
 echo "-----------Starting persist_home_dir"
 persist_home_dir $HOME "$ENV_PERSISTENT_HOME_DIR"
 # next shell command
