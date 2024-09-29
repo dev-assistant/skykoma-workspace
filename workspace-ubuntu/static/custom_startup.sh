@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo -e "\n\n------------------Staring custom_startup.sh ------------------"
 set -ex
-# TODO support dynamic switchto projector for automatic tasks
+# TODO replace START_COMMAND depends on env settings on startup
 # if xxx
 START_COMMAND="/projector/ide/bin/idea.sh"
 PGREP="com.intellij.idea.Main"

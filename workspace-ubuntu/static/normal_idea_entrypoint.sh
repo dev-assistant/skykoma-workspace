@@ -11,4 +11,5 @@ do
     sleep 1
 done
 echo "starting idea origin"
+# custom_startup.sh will be execute idea.sh automatic
 # exec $PROJECTOR_DIR/ide/bin/idea.sh
