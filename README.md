@@ -19,7 +19,7 @@ docker run -d --name skykoma-workspace --hostname=ubuntu --shm-size=512m \
     -p 6901:6901 \
     -p 2222:22 \
     -p 8887:8887 \
-    -v /data:/data
+    -v /data:/data \
     $IMAGE
 ```
 2. vnc server avaliable pm https://localhost:6901 with basic auth
