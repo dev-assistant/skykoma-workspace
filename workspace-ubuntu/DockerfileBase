@@ -1,0 +1,30 @@
+FROM kasmweb/core-ubuntu-jammy:1.16.0 as workspace
+ENV PROJECTOR_USER_NAME kasm-user
+ENV HOME /home/kasm-default-profile
+ENV STARTUPDIR /dockerstartup
+ENV INST_SCRIPTS $STARTUPDIR/install
+WORKDIR $HOME
+
+USER root
+######### Customize Container Here ###########
+# apt source
+RUN mv /etc/apt/sources.list /etc/apt/sources_backup.list && \
+echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse" >> /etc/apt/sources.list && \
+echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+echo "deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN true \
+# Any command which returns non-zero exit code will cause this shell script to exit immediately:
+   && set -e \
+# Activate debugging to show execution details: all commands will be printed before execution
+   && set -x \
+# install packages:
+    && apt update \
+    && apt install --no-install-recommends sudo -y \
+# clean apt to reduce image size:
+    && apt-get clean \
+    && apt-get autoremove -y \
+    && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* \
+    && rm -rf /var/cache/apt
+# sudoers
+RUN echo "$PROJECTOR_USER_NAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
