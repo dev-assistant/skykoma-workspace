@@ -1,7 +1,7 @@
 # docker run --name test --hostname=ubuntu --shm-size=512m -p 6901:6901  -e VNC_PW=password registry.hylstudio.local/skykoma-webide:test
 
 # --shm-size default is 64MB not engough xfdesktop used, showing by ipcs -m --human
-docker run --name test1 --hostname=ubuntu --shm-size=512m \
+docker run --name webide-idea --hostname=ubuntu --shm-size=512m \
     -e LOCAL_USER_UID=0 -e PERSISTENT_HOME=1 -e PERSISTENT_HOME_DIR=/data/root \
     -e VNC_PW=password \
     -e PROJECTOR_SERVER_TOKEN=123456 \
