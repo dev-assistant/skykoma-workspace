@@ -1,4 +1,4 @@
-# web-workspace
+# skykoma-workspace
 builds a docker image to run idea in a container, which is based on [kasmtech/workspaces-images](https://github.com/kasmtech/workspaces-images).
 ## Features
 1. prepared dev envs: python3、maven-3.9、jdk17、nvm
