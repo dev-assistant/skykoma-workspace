@@ -1,7 +1,7 @@
-TAG=2024100502
+TAG=2024100503
 REGISTRY=registry.hylstudio.local/skykoma-workspace
 downloadUrl=http://192.168.0.3:5004/ideaIC-2023.1.5.tar.gz
-projectorServerUrl=http://192.168.0.3:5004/projector-server-v1.8.1.11.zip
+projectorServerUrl=http://192.168.0.3:5004/projector-server-v1.8.1.12.zip
 # CACHE_OPTS="--no-cache"
 # PROGRESS_OPTS="--progress=plain"
 docker build $CACHE_OPTS -f Dockerfile --build-arg downloadUrl=$downloadUrl --build-arg projectorServerUrl=$projectorServerUrl -t $REGISTRY:$TAG .
