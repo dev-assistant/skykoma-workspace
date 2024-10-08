@@ -64,6 +64,7 @@ RUN sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/ssh
 	sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config && \
     sed -i "s/AllowTcpForwarding.*/AllowTcpForwarding yes/g" /etc/ssh/sshd_config && \
     sed -i "1i\export LESSCHARSET=utf-8" /etc/profile && \
+    sed -i "1i\export STARTUPDIR=/dockerstartup" /etc/profile && \
     sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config && \
     sed -i 's/#GatewayPorts no/GatewayPorts yes/g' /etc/ssh/sshd_config
 
