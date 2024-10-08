@@ -9,6 +9,10 @@ ensure_idea_config_files() {
         mkdir -p "${IDEA_COFNIG_DIR}"
         echo "create config dir $IDEA_COFNIG_DIR"
     fi
+    if [ -f "${IDEA_COFNIG_DIR}/.lock" ]; then
+        rm -rf ${IDEA_COFNIG_DIR}/.lock
+        echo "clean idea lock files"
+    fi
     export IDEA_VM_FILE="$IDEA_COFNIG_DIR/idea64.vmoptions"
     echo "IDEA_VM_FILE:$IDEA_VM_FILE"
     if [ ! -f "${IDEA_VM_FILE}" ]; then
