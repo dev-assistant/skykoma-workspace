@@ -24,7 +24,7 @@ persist_home_dir() {
             echo "recover $PERSIST_DIR to $HOME_DIR"
         fi
     fi
-    chmod 644 -R $HOME
+    chmod 644 -R $PERSIST_DIR
 }
 
 if [ $USER_UID == '0' ]; then
