@@ -202,7 +202,7 @@ disable_tips_of_the_day
 echo "-----------Starting disable_update"
 disable_update
 echo "-----------Starting sshd"
-/usr/sbin/sshd
+/usr/sbin/sshd -E /var/log/sshd.log
 # next shell command
 echo -e "\n\n------------------ EXECUTE COMMAND ------------------"
 echo "Executing command: '$@'"
