@@ -161,6 +161,7 @@ RUN sed -i "/openssl req/i if [ ! -f \${HOME}/.vnc/self.pem ]; then" $STARTUPDIR
 RUN sed -i "/openssl req/a fi" $STARTUPDIR/vnc_startup.sh
 RUN mv $PROJECTOR_DIR/custom_startup.sh $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
 RUN chmod +x $HOME/Desktop/*.desktop && \
+    chmod 644 $HOME && \
     echo "export LC_ALL=C.UTF-8">> ~/.bashrc && \
     echo "export LANG=C.UTF-8">> ~/.bashrc && \
     echo "set -g mouse on">> ~/.tmux.conf && \
