@@ -24,8 +24,7 @@ persist_home_dir() {
             echo "recover $PERSIST_DIR to $HOME_DIR"
         fi
     fi
-    rm -rf ~/.config/JetBrains/IdeaIC*/.lock
-    echo "clean idea lock files"
+    chmod 644 -R $HOME
 }
 
 if [ $USER_UID == '0' ]; then
