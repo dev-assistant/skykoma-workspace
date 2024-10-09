@@ -20,4 +20,5 @@ set -e # Any command which returns non-zero exit code will cause this shell scri
 set -x # Activate debugging to show execution details: all commands will be printed before execution
 
 cd /projector/ide/bin
+unset DISPLAY
 ./ide-projector-launcher.sh
