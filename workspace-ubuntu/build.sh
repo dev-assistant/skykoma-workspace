@@ -1,4 +1,4 @@
-TAG=2024101201-skykoma-workspace-test
+TAG=2024100901-skykoma-workspace
 REGISTRY=registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace
 downloadUrl=https://download.jetbrains.com/idea/ideaIC-2023.1.5.tar.gz
 projectorServerUrl=https://github.com/956237586/projector-server/releases/download/v1.8.1.12/projector-server-v1.8.1.12.zip

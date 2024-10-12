@@ -8,10 +8,10 @@ builds a docker image to run idea in a container, which is based on [kasmtech/wo
 ## Usage
 
 1. Run the container as a daemon.
-`--shm-size` default is 64MB not engough xfdesktop used, can be listed by `ipcs -m --human`
+`--shm-size` default is 64MB not enough xfdesktop used, can be listed by `ipcs -m --human`
 ```bash
-IMAGE=registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace:2024092901-skykoma-workspace
-# IMAGE=registry.hylstudio.local/skykoma-workspace:2024092801
+IMAGE=registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace:2024100901-skykoma-workspace
+# IMAGE=registry.hylstudio.local/skykoma-workspace:2024100901
 docker run -d --name skykoma-workspace --hostname=ubuntu --shm-size=512m \
     -e LOCAL_USER_UID=0 -e PERSISTENT_HOME=1 -e PERSISTENT_HOME_DIR=/data/root \
     -e VNC_PW=password \
