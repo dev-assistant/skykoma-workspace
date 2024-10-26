@@ -93,7 +93,7 @@ jobs:
           ALI_IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace
           IMAGE_TAG: ${{ steps.meta.outputs.tags }}
         run: |
-          docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} $ALI_IMAGE_NAME
+          docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$IMAGE_TAG $ALI_IMAGE_NAME:$IMAGE_TAG
           docker push $ALI_IMAGE_NAME:$IMAGE_TAG
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
