@@ -58,7 +58,13 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Log into registry ACR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          registry: registry.cn-hangzhou.aliyuncs.com
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
@@ -78,23 +84,12 @@ jobs:
             downloadUrl=https://download.jetbrains.com/idea/ideaIC-2023.1.5.tar.gz
             projectorServerUrl=https://github.com/956237586/projector-server/releases/download/v1.8.1.12/projector-server-v1.8.1.12.zip
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace:$DOCKER_METADATA_OUTPUT_VERSION
+            ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Login to ACR
-        uses: aliyun/acr-login@v1
-        with:
-          login-server: https://registry.cn-hangzhou.aliyuncs.com
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-      - name: Build and push image
-        env:
-          ALI_IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace
-          IMAGE_TAG: ${{ env.DOCKER_METADATA_OUTPUT_VERSION }}
-        run: |
-          docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$IMAGE_TAG $ALI_IMAGE_NAME:$IMAGE_TAG
-          docker push $ALI_IMAGE_NAME:$IMAGE_TAG
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
       # repository is public to avoid leaking data.  If you would like to publish
