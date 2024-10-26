@@ -91,7 +91,7 @@ jobs:
       - name: Build and push image
         env:
           ALI_IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace
-          IMAGE_TAG: ${{ steps.meta.outputs.tags }}
+          IMAGE_TAG: ${{ env.DOCKER_METADATA_OUTPUT_VERSION }}
         run: |
           docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$IMAGE_TAG $ALI_IMAGE_NAME:$IMAGE_TAG
           docker push $ALI_IMAGE_NAME:$IMAGE_TAG
