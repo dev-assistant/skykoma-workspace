@@ -73,11 +73,14 @@ ENV NODE_VERSION=v20.17.0
 ENV NVM_DIR $HOME/.nvm
 # https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh
 # https://gitee.com/RubyMetric/nvm-cn/raw/main/install.sh
+RUN curl -fsSL https://gitee.com/RubyMetric/chsrc/releases/download/v0.1.9/chsrc-x64-linux -o chsrc \
+    && chmod +x ./chsrc
 RUN curl -fsSL https://gitee.com/RubyMetric/nvm-cn/raw/main/install.sh | bash \
     && . $NVM_DIR/nvm.sh  \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use $NODE_VERSION \
+    && ./chsrc set node \
     && npm install -g yarn node-gyp
 # use sudo so that user does not get sudo usage info on (the first) login
 RUN echo "Running 'sudo' for $PROJECTOR_USER_NAME: success" && \
