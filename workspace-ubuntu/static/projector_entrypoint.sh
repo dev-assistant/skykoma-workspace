@@ -13,24 +13,23 @@ enable_jcef(){
     grep -q "^${JCEF_ENABLE_PREFIX}" "${IDEA_VM_FILE}" || echo "${JCEF_ENABLED}" >> "${IDEA_VM_FILE}"
     echo "disable jcef"
 }
-echo "Projector Starting with USER_UID : $USER_UID"
-echo "Projector Starting with USER_GID : $USER_GID"
-disable_jcef
-# disable autorestart by custom_startup.sh
-# TODO write switch command for convenience
-PGREP="com.intellij.idea.Main"
-while true
-do
-    echo -n 0 > /tmp/autorestart && pkill -f $PGREP
-    if [ x$? == x0 ] ;then
-        echo "windowd idea already exit succ"
-        break
+echo "Idea Starting with USER_UID : $USER_UID"
+echo "Idea Starting with USER_GID : $USER_GID"
+
+if [ x$(cat /tmp/ideamode) == x"projector" ]; then
+    disable_jcef
+    echo "starting projector service"
+    if [ $USER_UID == '0' ]; then
+        exec $PROJECTOR_DIR/run.sh "$@"
+    else
+        exec gosu $USERNAME $PROJECTOR_DIR/run.sh "$@"
     fi
-    sleep 1
-done
-echo "starting projector service"
-if [ $USER_UID == '0' ]; then
-    exec $PROJECTOR_DIR/run.sh "$@"
 else
-    exec gosu $USERNAME $PROJECTOR_DIR/run.sh "$@"
+    enable_jcef
+    if [ $USER_UID == '0' ]; then
+        exec $PROJECTOR_DIR/ide/bin/idea.sh "$@"
+    else
+        exec gosu $USERNAME $PROJECTOR_DIR/ide/bin/idea.sh "$@"
+    fi
 fi
+
