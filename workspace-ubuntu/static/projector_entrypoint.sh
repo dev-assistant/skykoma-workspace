@@ -15,7 +15,9 @@ enable_jcef(){
 }
 echo "Idea Starting with USER_UID : $USER_UID"
 echo "Idea Starting with USER_GID : $USER_GID"
-
+if [ x$1 == xprojector ]; then
+    echo -n "projector" > /tmp/ideamode
+fi
 if [ x$(cat /tmp/ideamode) == x"projector" ]; then
     disable_jcef
     echo "starting projector service"
