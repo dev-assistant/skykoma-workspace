@@ -3,7 +3,7 @@
 PGREP="com.intellij.idea.Main"
 while true
 do
-    echo -n 1 > /tmp/autorestart && pkill -f $PGREP
+    echo -n 1 > /tmp/autorestart && echo -n "raw" > /tmp/ideamode && pkill -f $PGREP
     if [ x$? == x0 ] ;then
         echo "projector idea already exit succ"
         break
