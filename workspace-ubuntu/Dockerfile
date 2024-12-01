@@ -143,7 +143,7 @@ RUN cat <<EOF > $HOME/Desktop/idea.desktop
 Encoding=UTF-8
 Name=IntelliJ IDEA
 Comment=IntelliJ IDEA
-Exec=$PROJECTOR_DIR/normal_idea_entrypoint.sh
+Exec=$PROJECTOR_DIR/normal_idea_entrypoint.sh raw
 Icon=$PROJECTOR_DIR/ide/bin/idea.svg
 Terminal=false
 Type=Application
@@ -154,7 +154,7 @@ RUN cat <<EOF >$HOME/Desktop/idea-projector.desktop
 Encoding=UTF-8
 Name=IntelliJ IDEA Projector
 Comment=IntelliJ IDEA Projector
-Exec=$PROJECTOR_DIR/projector_entrypoint.sh projector
+Exec=$PROJECTOR_DIR/normal_idea_entrypoint.sh projector
 Icon=$PROJECTOR_DIR/ide/bin/idea.svg
 Terminal=false
 Type=Application
