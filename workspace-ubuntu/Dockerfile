@@ -154,7 +154,7 @@ RUN cat <<EOF >$HOME/Desktop/idea-projector.desktop
 Encoding=UTF-8
 Name=IntelliJ IDEA Projector
 Comment=IntelliJ IDEA Projector
-Exec=$PROJECTOR_DIR/projector_entrypoint.sh
+Exec=$PROJECTOR_DIR/projector_entrypoint.sh projector
 Icon=$PROJECTOR_DIR/ide/bin/idea.svg
 Terminal=false
 Type=Application
