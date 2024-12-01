@@ -114,7 +114,9 @@ ENV PROJECTOR_DIR /projector
 RUN mkdir -p $PROJECTOR_DIR
 COPY static $PROJECTOR_DIR
 # above, we are adding the lazy nvm init to .bashrc, because one is executed on interactive shells, the other for non-interactive shells (e.g. plugin-host)
-RUN mv $PROJECTOR_DIR/nvm-lazy.sh $HOME/.nvm/nvm-lazy.sh && chown $PROJECTOR_USER_NAME:$PROJECTOR_USER_NAME $HOME/.nvm/nvm-lazy.sh
+RUN chmod +x $PROJECTOR_DIR/*.sh \
+    && mv $PROJECTOR_DIR/nvm-lazy.sh $HOME/.nvm/nvm-lazy.sh \
+    && chown $PROJECTOR_USER_NAME:$PROJECTOR_USER_NAME $HOME/.nvm/nvm-lazy.sh
 COPY --from=ide-downloader /download/ide $PROJECTOR_DIR/ide
 COPY --from=projector-downloader /download/projector-server $PROJECTOR_DIR/ide/projector-server
 RUN chmod 644 $PROJECTOR_DIR/ide/projector-server/lib/*
