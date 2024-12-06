@@ -11,7 +11,7 @@ enable_jcef(){
     JCEF_ENABLED="$JCEF_ENABLE_PREFIX""true"
     sed -i "/^${JCEF_ENABLE_PREFIX}/s#.*#${JCEF_ENABLED}#" "${IDEA_VM_FILE}"
     grep -q "^${JCEF_ENABLE_PREFIX}" "${IDEA_VM_FILE}" || echo "${JCEF_ENABLED}" >> "${IDEA_VM_FILE}"
-    echo "disable jcef"
+    echo "enable jcef"
 }
 echo "Idea Starting with USER_UID : $USER_UID"
 echo "Idea Starting with USER_GID : $USER_GID"
