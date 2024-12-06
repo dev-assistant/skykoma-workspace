@@ -66,7 +66,9 @@ RUN sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/ssh
     sed -i "1i\export LESSCHARSET=utf-8" /etc/profile && \
     sed -i "1i\export STARTUPDIR=/dockerstartup" /etc/profile && \
     sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config && \
-    sed -i 's/#GatewayPorts no/GatewayPorts yes/g' /etc/ssh/sshd_config
+    sed -i 's/#GatewayPorts no/GatewayPorts yes/g' /etc/ssh/sshd_config && \
+    echo "HostKeyAlgorithms +ssh-rsa" >> /etc/ssh/sshd_config.d/rsa.conf && \
+    echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> /etc/ssh/sshd_config.d/rsa.conf
 
 #config nvm
 ENV NODE_VERSION=v20.17.0
