@@ -27,6 +27,7 @@ ENV PROJECTOR_USER_NAME kasm-user
 ENV HOME /home/kasm-default-profile
 ENV STARTUPDIR /dockerstartup
 ENV INST_SCRIPTS $STARTUPDIR/install
+ENV TZ Asia/Shanghai
 WORKDIR $HOME
 
 USER root
