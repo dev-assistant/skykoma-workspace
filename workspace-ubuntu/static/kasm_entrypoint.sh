@@ -1,7 +1,6 @@
 #!/bin/bash
 export USER_UID=${LOCAL_USER_UID:-1000}
 export USER_GID=${LOCAL_USER_GID:-1000}
-export USERNAME=${PROJECTOR_USER_NAME:-"kasm-user"}
 export ENV_PERSISTENT_HOME=${PERSISTENT_HOME:-"0"}
 export ENV_PERSISTENT_HOME_DIR=${PERSISTENT_HOME_DIR:-"/data/root"}
 
@@ -9,6 +8,7 @@ export ENV_PERSISTENT_HOME_DIR=${PERSISTENT_HOME_DIR:-"/data/root"}
 persist_home_dir() {
     HOME_DIR="$1"
     PERSIST_DIR="$2"
+    chmod 750 $HOME_DIR
     if [ "${ENV_PERSISTENT_HOME}" = "1" ]; then
         if [ ! -d "${PERSIST_DIR}" ]; then
             mkdir -p "${PERSIST_DIR}"
@@ -23,14 +23,18 @@ persist_home_dir() {
             ln -sf "${PERSIST_DIR}" "${HOME_DIR}"
             echo "recover $PERSIST_DIR to $HOME_DIR"
         fi
+        chmod 750 $PERSIST_DIR
     fi
-    chmod 644 $PERSIST_DIR
 }
 
 if [ $USER_UID == '0' ]; then
+    export USERNAME=root
     export HOME=/root
+    export KASM_USER=root
 else
+    export USERNAME=${PROJECTOR_USER_NAME:-"kasm-user"}
     export HOME=/home/$USERNAME
+    export KASM_USER=$USERNAME
 fi
 echo "-----------Starting persist_home_dir"
 persist_home_dir $HOME "$ENV_PERSISTENT_HOME_DIR"

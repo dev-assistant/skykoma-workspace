@@ -132,8 +132,8 @@ RUN true \
     # && mv $PROJECTOR_DIR/$PROJECTOR_USER_NAME /home \
     && chmod g+rw /home && mkdir -p /home/$PROJECTOR_USER_NAME && mkdir -p /home/project \
     # && useradd -d /home/$PROJECTOR_USER_NAME -s /bin/bash -G sudo $PROJECTOR_USER_NAME \
-    && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME /home/$PROJECTOR_USER_NAME \
-    && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME /home/project \
+    && chown -R $PROJECTOR_USER_NAME:$PROJECTOR_USER_NAME /home/$PROJECTOR_USER_NAME \
+    && chown -R $PROJECTOR_USER_NAME:$PROJECTOR_USER_NAME /home/project \
     && ln -s $PROJECTOR_DIR/ide/bin/idea.sh /usr/local/bin/idea \
     && chmod +x $PROJECTOR_DIR/run.sh
 
@@ -178,5 +178,6 @@ RUN chmod +x $HOME/Desktop/*.desktop && \
 USER root
 # avoid using /root, getPwd will error cause kasm_entrypoint.sh will mv $HOME dynamic
 WORKDIR /
-ENTRYPOINT ["/projector/kasm_entrypoint.sh", "/projector/init_services.sh", "/dockerstartup/kasm_default_profile.sh", "/dockerstartup/vnc_startup.sh"]
+ENTRYPOINT ["/projector/kasm_entrypoint.sh", "/dockerstartup/kasm_default_profile.sh", "/projector/init_services.sh", "/dockerstartup/vnc_startup.sh"]
 # ENTRYPOINT ["/bin/bash"]
+# /projector/kasm_entrypoint.sh /dockerstartup/kasm_default_profile.sh /projector/init_services.sh /dockerstartup/vnc_startup.sh

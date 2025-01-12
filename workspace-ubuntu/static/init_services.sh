@@ -29,6 +29,7 @@ ensure_idea_config_files() {
 setup_uid_gid(){
     echo "Workspace Starting with USER_UID : $USER_UID"
     echo "Workspace Starting with USER_GID : $USER_GID"
+    echo "Workspace Starting with USERNAME : $USERNAME"
     echo "-----workspace------Starting"
     if [ $USER_UID == '0' ]; then
         # root运行容器，容器里面一样root运行
@@ -51,13 +52,14 @@ setup_uid_gid(){
             echo "-----workspace---usermod gid end---"$(date "+%Y-%m-%d %H:%M:%S")
         fi
         export HOME=/home/$USERNAME
-        chown -R $USERNAME:$USERNAME /home/project
-        if [ "${ENV_PERSISTENT_HOME}" = "1" ]; then
-            chown -R $USERNAME:$USERNAME "$ENV_PERSISTENT_HOME_DIR"
-        fi
-        mkdir -p $HOME/.ssh
-        chown -R $USERNAME:$USERNAME $HOME/.ssh
     fi
+    mkdir -p $HOME/.ssh
+    if [ "${ENV_PERSISTENT_HOME}" = "1" ]; then
+        chown -h $USERNAME:$USERNAME $HOME
+        chown $USERNAME:$USERNAME $PERSISTENT_HOME_DIR
+    fi
+    chown $USERNAME:$USERNAME $HOME
+    chown -R $USERNAME:$USERNAME $HOME/.
     export PWD=$HOME
 }
 
@@ -77,45 +79,6 @@ disable_consent_options() {
     echo -n "rsch.send.usage.stat:1.1:0:$(date +%s000)" > $CONSENT_OPTION_DIR/accepted
     echo "disable rsch.send.usage.stat succ"
 }
-agree_policy_auto(){
-    AGREE_POLICY_SCRIPT=/tmp/skip.jsh
-    cat <<EOF > $AGREE_POLICY_SCRIPT
-import java.util.Locale;
-import java.util.StringTokenizer;
-import java.util.prefs.Preferences;
-
-private static String getNodeKey(String key) {
-  int dotIndex = key.lastIndexOf('.');
-  return (dotIndex >= 0 ? key.substring(dotIndex + 1) : key).toLowerCase(Locale.ENGLISH);
-}
-
-private static Preferences getPreferences(String key) {
-  Preferences prefs = Preferences.userRoot();
-  final int dotIndex = key.lastIndexOf('.');
-  if (dotIndex > 0) {
-    StringTokenizer tokenizer = new StringTokenizer(key.substring(0, dotIndex), ".", false);
-    while (tokenizer.hasMoreElements()) {
-      String str = tokenizer.nextToken();
-      prefs = prefs.node(str == null ? null : str.toLowerCase(Locale.ENGLISH));
-    }
-  }
-  return prefs;
-}
-
-var key = "JetBrains.privacy_policy.euaCommunity_accepted_version";
-var version = "1.0"
-var prefs = getPreferences(key);
-var nk = getNodeKey(key);
-var current = prefs.get(nk, null)
-if(current == null || !current.equals(version)) {
-  prefs.put(nk, version);
-  System.out.println("skip succ");
-}
-/exit
-EOF
-jshell $AGREE_POLICY_SCRIPT 2>&1
-}
-
 ENV_PROJECTOR_SERVER_TOKEN=${PROJECTOR_SERVER_TOKEN:-""}
 ENV_PROJECTOR_SERVER_RO_TOKEN=${PROJECTOR_SERVER_RO_TOKEN:-"$ENV_PROJECTOR_SERVER_TOKEN"}
 
@@ -183,18 +146,14 @@ if [ -f "$PROJECTOR_DIR/ide/ide.tar.gz" ];then
     tar -zxf ide.tar.gz && \
     /usr/bin/mv -fv idea-IC*/* . && \
     mv $PROJECTOR_DIR/ide-projector-launcher.sh $PROJECTOR_DIR/ide/bin && \
-    chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin && \
     chmod +x $PROJECTOR_DIR/ide/bin/ide-projector-launcher.sh && \
     rm -rf ide.tar.gz
     cd /
 fi
+chown -R $USERNAME:$USERNAME $PROJECTOR_DIR
 ensure_idea_config_files
-echo "-----------Starting setup_uid_gid"
-setup_uid_gid
 echo "-----------Starting change_password"
 change_password
-echo "-----------Starting agree_policy_auto"
-agree_policy_auto
 echo "-----------Starting disable_consent_options"
 disable_consent_options
 echo "-----------Starting set_projector_server_token"
@@ -207,7 +166,13 @@ echo "-----------Starting disable_update"
 disable_update
 echo "-----------Starting sshd"
 /usr/sbin/sshd -E /var/log/sshd.log
+echo "-----------Starting setup_uid_gid"
+setup_uid_gid
 # next shell command
 echo -e "\n\n------------------ EXECUTE COMMAND ------------------"
 echo "Executing command: '$@'"
-exec "$@"
+if [ $USER_UID == '0' ]; then
+    exec "$@"
+else
+    exec gosu $USERNAME "$@"
+fi
