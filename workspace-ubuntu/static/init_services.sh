@@ -140,6 +140,25 @@ printf "</application>"  >> $UPDATE_CONFIG_XML
     echo "disable_update"
 }
 
+auto_trust_dir(){
+    TRUST_CODE_DIR=$1
+    CONFIG_XML_DIR=$IDEA_COFNIG_DIR/options
+    mkdir -p $CONFIG_XML_DIR
+    UPDATE_CONFIG_XML=$CONFIG_XML_DIR/trusted-paths.xml
+    cat <<EOF > $UPDATE_CONFIG_XML
+<application>
+  <component name="Trusted.Paths.Settings">
+    <option name="TRUSTED_PATHS">
+      <list>
+        <option value="$TRUST_CODE_DIR" />
+      </list>
+    </option>
+  </component>
+EOF
+printf "</application>"  >> $UPDATE_CONFIG_XML
+    echo "auto_trust_dir $TRUST_CODE_DIR"
+}
+
 if [ -f "$PROJECTOR_DIR/ide/ide.tar.gz" ];then
     echo "-----------Starting unzip ide.tar.gz"
     cd $PROJECTOR_DIR/ide
@@ -164,6 +183,8 @@ echo "-----------Starting disable_tips_of_the_day"
 disable_tips_of_the_day
 echo "-----------Starting disable_update"
 disable_update
+echo "-----------Starting auto_trust_dir"
+auto_trust_dir $ENV_PERSISTENT_HOME_DIR
 echo "-----------Starting sshd"
 /usr/sbin/sshd -E /var/log/sshd.log
 echo "-----------Starting setup_uid_gid"
