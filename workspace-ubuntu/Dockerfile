@@ -1,5 +1,5 @@
 # download origin ide
-FROM alpine as ide-downloader
+FROM alpine AS ide-downloader
 # https://download.jetbrains.com/idea/ideaIC-2021.2.3.tar.gz
 ARG downloadUrl
 RUN mkdir -p /download/ide && cd /download/ide && wget -q $downloadUrl -O ide.tar.gz
@@ -7,13 +7,13 @@ RUN mkdir -p /download/ide && cd /download/ide && wget -q $downloadUrl -O ide.ta
 # after unzip 894MB -> 3G, too large
 
 # maven download
-FROM alpine as maven-downloader
+FROM alpine AS maven-downloader
 RUN mkdir -p /download && \
     cd /download && \
     wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz && \
     tar -xvzf apache-maven-3.9.9-bin.tar.gz
 # projector server
-FROM alpine as projector-downloader
+FROM alpine AS projector-downloader
 ARG projectorServerUrl
 RUN mkdir /download && cd /download && \
     wget -q $projectorServerUrl -O /download/projector-server.zip && \
@@ -21,13 +21,13 @@ RUN mkdir /download && cd /download && \
     rm /download/projector-server.zip && \
     find . -maxdepth 1 -type d -name projector-server-* -exec mv {} projector-server \;
 # workspace
-# FROM kasmweb/core-ubuntu-noble:1.16.0 as workspace
-FROM kasmweb/core-ubuntu-jammy:1.16.0 as workspace
-ENV PROJECTOR_USER_NAME kasm-user
-ENV HOME /home/kasm-default-profile
-ENV STARTUPDIR /dockerstartup
-ENV INST_SCRIPTS $STARTUPDIR/install
-ENV TZ Asia/Shanghai
+# FROM kasmweb/core-ubuntu-noble:1.16.0 AS workspace
+FROM kasmweb/core-ubuntu-jammy:1.16.0 AS workspace
+ENV PROJECTOR_USER_NAME=kasm-user
+ENV HOME=/home/kasm-default-profile
+ENV STARTUPDIR=/dockerstartup
+ENV INST_SCRIPTS=$STARTUPDIR/install
+ENV TZ=Asia/Shanghai
 WORKDIR $HOME
 
 USER root
@@ -73,7 +73,7 @@ RUN sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/ssh
 
 #config nvm
 ENV NODE_VERSION=v20.17.0
-ENV NVM_DIR $HOME/.nvm
+ENV NVM_DIR=$HOME/.nvm
 # https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh
 # https://gitee.com/RubyMetric/nvm-cn/raw/main/install.sh
 RUN curl -fsSL https://gitee.com/RubyMetric/chsrc/releases/download/v0.1.9/chsrc-x64-linux -o chsrc \
@@ -113,7 +113,7 @@ RUN cat /root/.bashrc >> ~/.bashrc && \
 # RUN bash $INST_SCRIPTS/edge/install_edge.sh  && rm -rf $INST_SCRIPTS/edge/
 
 # static files
-ENV PROJECTOR_DIR /projector
+ENV PROJECTOR_DIR=/projector
 RUN mkdir -p $PROJECTOR_DIR
 COPY static $PROJECTOR_DIR
 # above, we are adding the lazy nvm init to .bashrc, because one is executed on interactive shells, the other for non-interactive shells (e.g. plugin-host)
