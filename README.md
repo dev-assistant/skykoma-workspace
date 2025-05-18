@@ -47,7 +47,7 @@ see `build.sh` and `DockefFile` for all details
    - check process using `pgrep -f com.intellij.idea.Main`, autorestart if process not exists
    - if `/tmp/autorestart` not been disabled, execute `/projector/ide/bin/idea.sh` and idea.sh subprocess will not exit
 5. `projector_entrypoint.sh` and `normal_idea_entrypoint.sh`
-   - switch projector mode and windowed mode by changing /tmp/autorestart
+   - switch projector mode and windowed mode by changing /tmp/ideamode
    - TODO replace START_COMMAND depends on env settings on startup
 ## Acknowledgments
 
