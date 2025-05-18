@@ -1,6 +1,6 @@
-TAG=v2025011203
+TAG=v2025051801
 REGISTRY=registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace
-downloadUrl=https://download.jetbrains.com/idea/ideaIC-2023.1.5.tar.gz
+downloadUrl=https://download.jetbrains.com/idea/ideaIC-2024.3.5.tar.gz
 projectorServerUrl=https://github.com/956237586/projector-server/releases/download/v1.8.1.12/projector-server-v1.8.1.12.zip
 # CACHE_OPTS="--no-cache"
 # PROGRESS_OPTS="--progress=plain"

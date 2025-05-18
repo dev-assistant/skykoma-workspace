@@ -16,7 +16,7 @@ MAXIMIZE_SCRIPT=$STARTUPDIR/maximize_window.sh
 DEFAULT_ARGS=""
 ARGS=${APP_ARGS:-$DEFAULT_ARGS}
 echo -n 1 > /tmp/autorestart
-echo -n "projector" > /tmp/ideamode
+echo -n "noprojector" > /tmp/ideamode
 options=$(getopt -o gau: -l go,assign,url: -n "$0" -- "$@") || exit
 eval set -- "$options"
 
