@@ -223,7 +223,7 @@ xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>Right'
 # xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Right' -s ''
 echo "-----------Starting ibus-daemon"
 ibus-daemon -dxr
-gsettings set org.freedesktop.ibus.general preload-engines "['xkb:us::eng', 'pinyin']"
+gsettings set org.freedesktop.ibus.general preload-engines "['xkb:us::eng', 'libpinyin']"
 gsettings set org.freedesktop.ibus.general.hotkey triggers "['<Control>1']"
 echo "-----------Starting setup_uid_gid"
 setup_uid_gid
