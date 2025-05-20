@@ -212,7 +212,7 @@ xfconf-query -c xfce4-panel -p /panels/panel-1/mode -s 1
 # make panel bar unlock and hide intelligently
 xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked -s false
 xfconf-query -c xfce4-panel -p /panels/panel-1/autohide-behavior  1
-echo "-----------Starating Clear conflict_keys"
+echo "-----------Staring Clear conflict_keys"
 xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/default/<Primary><Alt>l' -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>KP_7' -s ''
