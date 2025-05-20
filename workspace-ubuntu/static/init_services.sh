@@ -101,6 +101,22 @@ set_projector_server_token(){
     echo "set projector server ro token:$ENV_PROJECTOR_SERVER_RO_TOKEN"
 }
 
+disable_jcef_sandbox() {
+    if [ $USER_UID == '0' ]; then
+        JCEF_SANDBOX_ENABLE_PREFIX="-Dide.browser.jcef.sandbox.enable="
+        JCEF_SANDBOX_DISABLE="$JCEF_SANDBOX_ENABLE_PREFIX""false"
+        sed -i "/^${JCEF_SANDBOX_ENABLE_PREFIX}/s#.*#${JCEF_SANDBOX_DISABLE}#" "${IDEA_VM_FILE}"
+        grep -q "^${JCEF_SANDBOX_ENABLE_PREFIX}" "${IDEA_VM_FILE}" || echo "${JCEF_SANDBOX_DISABLE}" >> "${IDEA_VM_FILE}"
+        echo "disable jcef sandbox"
+    else
+        JCEF_SANDBOX_ENABLE_PREFIX="-Dide.browser.jcef.sandbox.enable="
+        JCEF_SANDBOX_DISABLE="$JCEF_SANDBOX_ENABLE_PREFIX""true"
+        sed -i "/^${JCEF_SANDBOX_ENABLE_PREFIX}/s#.*#${JCEF_SANDBOX_DISABLE}#" "${IDEA_VM_FILE}"
+        grep -q "^${JCEF_SANDBOX_ENABLE_PREFIX}" "${IDEA_VM_FILE}" || echo "${JCEF_SANDBOX_DISABLE}" >> "${IDEA_VM_FILE}"
+        echo "disable jcef sandbox"
+    fi
+}
+
 set_idea_is_internal() {
     LINE_INTERNAL_PREFIX="idea.is.internal="
     LINE_INTERNAL_ENABLED="$LINE_INTERNAL_PREFIX""true"
@@ -177,6 +193,8 @@ echo "-----------Starting disable_consent_options"
 disable_consent_options
 echo "-----------Starting set_projector_server_token"
 set_projector_server_token
+echo "-----------Starting disable_jcef_sandbox"
+disable_jcef_sandbox
 echo "-----------Starting set_idea_internal"
 set_idea_is_internal
 echo "-----------Starting disable_tips_of_the_day"
@@ -187,6 +205,26 @@ echo "-----------Starting auto_trust_dir"
 auto_trust_dir $ENV_PERSISTENT_HOME_DIR
 echo "-----------Starting sshd"
 /usr/sbin/sshd -E /var/log/sshd.log
+echo "-----------Staring change default ui"
+# xfconf-query -c xfce4-panel -p /panels/panel-1/mode -s 1
+# make panel bar vertical
+xfconf-query -c xfce4-panel -p /panels/panel-1/mode -s 1
+# make panel bar unlock and hide intelligently
+xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked -s false
+xfconf-query -c xfce4-panel -p /panels/panel-1/autohide-behavior  1
+echo "-----------Starating Clear conflict_keys"
+xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/default/<Primary><Alt>l' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>KP_7' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>KP_7' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>Left' -s ''
+# xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Left' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>Right' -s ''
+# xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Right' -s ''
+echo "-----------Starting ibus-daemon"
+ibus-daemon -dxr
+gsettings set org.freedesktop.ibus.general preload-engines "['xkb:us::eng', 'pinyin']"
+gsettings set org.freedesktop.ibus.general.hotkey triggers "['<Control>1']"
 echo "-----------Starting setup_uid_gid"
 setup_uid_gid
 # next shell command

@@ -3,7 +3,9 @@ export USER_UID=${LOCAL_USER_UID:-1000}
 export USER_GID=${LOCAL_USER_GID:-1000}
 export ENV_PERSISTENT_HOME=${PERSISTENT_HOME:-"0"}
 export ENV_PERSISTENT_HOME_DIR=${PERSISTENT_HOME_DIR:-"/data/root"}
-
+export XMODIFIERS="@im=ibus"
+export GTK_IM_MODULE="ibus"
+export QT_IM_MODULE="ibus"
 
 persist_home_dir() {
     HOME_DIR="$1"

@@ -46,7 +46,7 @@ RUN true \
 # install packages:
     && apt update \
 # openjdk-17-jdk 274MB | build-essential 181MB | libsecret-1-dev 55.9MB | others 14MB 
-    && apt install --no-install-recommends tzdata supervisor openssh-server gosu iputils-ping telnet jq moreutils lsof strace apt-utils make libxss1 psmisc lrzsz vim git wget curl bash-completion net-tools sudo ca-certificates procps tar zip unzip tmux python3 openjdk-17-jdk -y \
+    && apt install --no-install-recommends tzdata supervisor openssh-server gosu iputils-ping telnet jq moreutils lsof strace apt-utils make libxss1 psmisc lrzsz vim git wget curl bash-completion net-tools sudo ca-certificates procps tar zip unzip tmux python3 openjdk-17-jdk ibus ibus-libpinyin -y \
 # clean apt to reduce image size:
     && apt-get clean \
     && apt-get autoremove -y \
