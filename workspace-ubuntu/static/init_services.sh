@@ -208,15 +208,16 @@ echo "-----------Starting sshd"
 echo "-----------Staring change default ui"
 # xfconf-query -c xfce4-panel -p /panels/panel-1/mode -s 1
 # make panel bar vertical
-xfconf-query -c xfce4-panel -p /panels/panel-1/mode -s 1
+xfconf-query -c xfce4-panel -p /panels/panel-1/mode -n -t int -s 1
 # make panel bar unlock and hide intelligently
 xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked -s false
-xfconf-query -c xfce4-panel -p /panels/panel-1/autohide-behavior  1
+xfconf-query -c xfce4-panel -p /panels/panel-1/autohide-behavior -n -t int -s 1
 echo "-----------Staring Clear conflict_keys"
 xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/default/<Primary><Alt>l' -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts  -p '/xfwm4/default/<Alt>Insert' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts  -p '/xfwm4/custom/<Alt>Insert' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Alt>Insert' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -r
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>KP_7' -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>KP_7' -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>Left' -s ''
