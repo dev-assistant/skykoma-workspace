@@ -17,6 +17,11 @@ DEFAULT_ARGS=""
 ARGS=${APP_ARGS:-$DEFAULT_ARGS}
 echo -n 1 > /tmp/autorestart
 echo -n "noprojector" > /tmp/ideamode
+echo "-----------Starting ibus-daemon"
+ibus-daemon -dxr
+gsettings set org.freedesktop.ibus.general preload-engines "['xkb:us::eng', 'libpinyin']"
+gsettings set org.freedesktop.ibus.general.hotkey triggers "['<Control>1']"
+
 options=$(getopt -o gau: -l go,assign,url: -n "$0" -- "$@") || exit
 eval set -- "$options"
 
