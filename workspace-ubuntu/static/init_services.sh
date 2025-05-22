@@ -208,12 +208,12 @@ echo "-----------Starting disable_tips_of_the_day"
 disable_tips_of_the_day
 echo "-----------Starting disable_update"
 disable_update
+echo "-----------Starting setup_uid_gid"
+setup_uid_gid
 echo "-----------Starting auto_trust_dir"
 auto_trust_dir $ENV_PERSISTENT_HOME_DIR
 echo "-----------Starting sshd"
 /usr/sbin/sshd -E /var/log/sshd.log
-echo "-----------Starting setup_uid_gid"
-setup_uid_gid
 # next shell command
 echo -e "\n\n------------------ EXECUTE COMMAND ------------------"
 echo "Executing command: '$@'"
