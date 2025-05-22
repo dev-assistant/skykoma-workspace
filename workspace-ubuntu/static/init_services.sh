@@ -167,7 +167,8 @@ auto_trust_dir(){
     CONFIG_XML_DIR=$IDEA_COFNIG_DIR/options
     mkdir -p $CONFIG_XML_DIR
     UPDATE_CONFIG_XML=$CONFIG_XML_DIR/trusted-paths.xml
-    cat <<EOF > $UPDATE_CONFIG_XML
+    if [ ! -f "$UPDATE_CONFIG_XML" ]; then
+        cat <<EOF > $UPDATE_CONFIG_XML
 <application>
   <component name="Trusted.Paths.Settings">
     <option name="TRUSTED_PATHS">
@@ -178,8 +179,9 @@ auto_trust_dir(){
     </option>
   </component>
 EOF
-printf "</application>"  >> $UPDATE_CONFIG_XML
-    echo "auto_trust_dir $TRUST_CODE_DIR"
+    printf "</application>"  >> $UPDATE_CONFIG_XML
+        echo "auto_trust_dir $TRUST_CODE_DIR"
+    fi
 }
 
 if [ -f "$PROJECTOR_DIR/ide/ide.tar.gz" ];then
