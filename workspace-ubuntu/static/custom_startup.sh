@@ -28,17 +28,17 @@ echo "-----------Staring Clear conflict_keys"
 xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/default/<Primary><Alt>l' -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Alt>Insert' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -r
+#xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -s ''
+#xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -r
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Alt>F7' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>F7' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>F7' -r
+#xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>F7' -s ''
+#xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>F7' -r
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>Left' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Left' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Left' -r
+#xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Left' -s ''
+#xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Left' -r
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Primary><Alt>Right' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Right' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Right' -r
+#xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Right' -s ''
+#xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Right' -r
 echo "-----------Starting ibus-daemon"
 ibus-daemon -dxr
 gsettings set org.freedesktop.ibus.general preload-engines "['xkb:us::eng', 'libpinyin']"
