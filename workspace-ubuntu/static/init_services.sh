@@ -1,7 +1,7 @@
 #!/bin/bash
 USER_PASS=${LOCAL_USER_PASSWORD:-"skykoma123.@IDE"}
 ensure_idea_config_files() {
-    IDEA_CONFIG_DIR_NAME=$(cat /projector/ide/product-info.json |grep dataDirectoryName |awk -F'"' '{print $4}')
+    IDEA_CONFIG_DIR_NAME=$(cat /projector/ide/product-info.json |grep dataDirectoryName|head -n 1 |awk -F'"' '{print $4}')
     echo "IDEA_CONFIG_DIR_NAME:$IDEA_CONFIG_DIR_NAME"
     IDEA_COFNIG_DIR="$HOME/.config/JetBrains/$IDEA_CONFIG_DIR_NAME"
     echo "IDEA_COFNIG_DIR:$IDEA_COFNIG_DIR"
@@ -179,7 +179,7 @@ auto_trust_dir(){
     </option>
   </component>
 EOF
-    printf "</application>"  >> $UPDATE_CONFIG_XML
+        printf "</application>"  >> $UPDATE_CONFIG_XML
         echo "auto_trust_dir $TRUST_CODE_DIR"
     fi
 }
