@@ -167,6 +167,7 @@ auto_trust_dir(){
     <option name="TRUSTED_PATHS">
       <list>
         <option value="$TRUST_CODE_DIR" />
+        <option value="$HOME/IdeaProjects" />
       </list>
     </option>
   </component>
