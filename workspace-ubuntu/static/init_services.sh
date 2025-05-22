@@ -25,6 +25,12 @@ ensure_idea_config_files() {
         touch "$IDEA_PROPERTIES_FILE"
         echo "create vm properties file $IDEA_PROPERTIES_FILE"
     fi
+    CACHE_DIR=$HOME/.cache/JetBrains/$IDEA_CONFIG_DIR_NAME
+    echo "CACHE_DIR:$CACHE_DIR"
+    rm -rf $CACHE_DIR/jcef_cache/SingletonCookie
+    rm -rf $CACHE_DIR/jcef_cache/SingletonLock 
+    rm -rf $CACHE_DIR/jcef_cache/SingletonSocket
+    echo "clean idea jcef_cache files"
 }
 setup_uid_gid(){
     echo "Workspace Starting with USER_UID : $USER_UID"
