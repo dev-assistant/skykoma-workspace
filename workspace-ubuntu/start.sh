@@ -1,6 +1,6 @@
 # docker run --name test --hostname=ubuntu --shm-size=512m -p 6901:6901 -e VNC_PW=password registry.hylstudio.local/skykoma-workspace:1.16.0-base
-IMAGE=registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace:v2025052202
 # IMAGE=registry.hylstudio.local/skykoma-workspace:2024092801
+IMAGE=registry.cn-hangzhou.aliyuncs.com/hylstudio/workspace:v2025052204
     # -e LOCAL_USER_UID=0 -e PERSISTENT_HOME=1 -e PERSISTENT_HOME_DIR=/data/root \
     # -e LOCAL_USER_UID=1000 -e PERSISTENT_HOME=1 -e PERSISTENT_HOME_DIR=/data/kasm-user \
 docker run --name skykoma-workspace --hostname=ubuntu --shm-size=512m \
