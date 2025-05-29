@@ -26,7 +26,8 @@ xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked -s false
 xfconf-query -c xfce4-panel -p /panels/panel-1/autohide-behavior -n -t int -s 1
 echo "-----------Staring Clear conflict_keys"
 xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/default/<Primary><Alt>l' -s ''
-xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -n -t string -s ''
+xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -r
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/default/<Alt>Insert' -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -n -t string -s ''
 xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -r
