@@ -188,7 +188,7 @@ if [ -f "$PROJECTOR_DIR/ide/ide.tar.gz" ];then
     echo "-----------Starting unzip ide.tar.gz"
     cd $PROJECTOR_DIR/ide
     tar -zxf ide.tar.gz && \
-    /usr/bin/mv -fv idea-IC*/* . && \
+    /usr/bin/mv -fv idea-I*/* . && \
     mv $PROJECTOR_DIR/ide-projector-launcher.sh $PROJECTOR_DIR/ide/bin && \
     chmod +x $PROJECTOR_DIR/ide/bin/ide-projector-launcher.sh && \
     rm -rf ide.tar.gz
