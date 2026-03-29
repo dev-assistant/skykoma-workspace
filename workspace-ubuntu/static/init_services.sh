@@ -110,9 +110,17 @@ set_projector_server_token(){
 disable_jcef_sandbox() {
     if [ $USER_UID == '0' ]; then
         JCEF_SANDBOX_ENABLE_PREFIX="-Dide.browser.jcef.sandbox.enable="
+        JCEF_SANDBOX_ENABLE_PREFIX2="-Dide.browser.jcef.out-of-process.enabled="
+        JCEF_SANDBOX_ENABLE_PREFIX3="-Dide.browser.jcef.run-under-superuser.allowed="
         JCEF_SANDBOX_DISABLE="$JCEF_SANDBOX_ENABLE_PREFIX""false"
+        JCEF_SANDBOX_DISABLE2="$JCEF_SANDBOX_ENABLE_PREFIX2""false"
+        JCEF_SANDBOX_DISABLE3="$JCEF_SANDBOX_ENABLE_PREFIX3""true"
         sed -i "/^${JCEF_SANDBOX_ENABLE_PREFIX}/s#.*#${JCEF_SANDBOX_DISABLE}#" "${IDEA_VM_FILE}"
         grep -q "^${JCEF_SANDBOX_ENABLE_PREFIX}" "${IDEA_VM_FILE}" || echo "${JCEF_SANDBOX_DISABLE}" >> "${IDEA_VM_FILE}"
+        sed -i "/^${JCEF_SANDBOX_ENABLE_PREFIX2}/s#.*#${JCEF_SANDBOX_DISABLE2}#" "${IDEA_VM_FILE}"
+        grep -q "^${JCEF_SANDBOX_ENABLE_PREFIX2}" "${IDEA_VM_FILE}" || echo "${JCEF_SANDBOX_DISABLE2}" >> "${IDEA_VM_FILE}"
+        sed -i "/^${JCEF_SANDBOX_ENABLE_PREFIX3}/s#.*#${JCEF_SANDBOX_DISABLE3}#" "${IDEA_VM_FILE}"
+        grep -q "^${JCEF_SANDBOX_ENABLE_PREFIX3}" "${IDEA_VM_FILE}" || echo "${JCEF_SANDBOX_DISABLE3}" >> "${IDEA_VM_FILE}"
         echo "disable jcef sandbox"
     else
         JCEF_SANDBOX_ENABLE_PREFIX="-Dide.browser.jcef.sandbox.enable="
