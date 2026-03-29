@@ -72,7 +72,7 @@ RUN sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/ssh
     echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> /etc/ssh/sshd_config.d/rsa.conf
 
 #config nvm
-ENV NODE_VERSION=v20.17.0
+ENV NODE_VERSION=v24.14.1
 ENV NVM_DIR=$HOME/.nvm
 # https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh
 # https://gitee.com/RubyMetric/nvm-cn/raw/main/install.sh
