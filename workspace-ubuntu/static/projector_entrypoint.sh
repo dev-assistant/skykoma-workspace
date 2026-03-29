@@ -71,6 +71,6 @@ if [ x$(cat /tmp/ideamode) == x"projector" ]; then
 else
     enable_jcef
     echo "starting raw idea"
-    exec $PROJECTOR_DIR/ide/bin/idea.sh "$@"
+    exec $PROJECTOR_DIR/ide/bin/idea "$@"
 fi
 
